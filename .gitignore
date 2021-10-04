@@ -1,2 +1,3 @@
 port/
 .env
+__pycache__/
