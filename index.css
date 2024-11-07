@@ -1,0 +1,20 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-image {
+    max-width: 700px;
+}
+
+.main-image > img {
+    width: 100%;
+    height: auto;
+    max-height: 90vh;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+
