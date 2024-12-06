@@ -1,5 +1,4 @@
 const IMAGE_CHANGE_INTERVAL = 5000;
-const BRIGHTNESS_INTERVAL = 50;
 
 const imageSources = ["/assets/the_diplomat.png", "/assets/space_x.jpeg", "/assets/white_collar_2.jpg", "/assets/suits.jpg", "/assets/avatar.png"]
 
@@ -21,20 +20,9 @@ imageElement = document.getElementById("sample-image");
 
 imageElement.onload = function () {
     let initialBrightness = 70;
-    document.body.style.filter = `brightness(${initialBrightness}%)`;
 
     rgb = getAverageRGB(imageElement);
     document.body.style.backgroundColor = `rgb(${rgb.r}, ${rgb.g},${rgb.b})`;
-
-    // increase brightness gradually until 100%, there needs to be 1 second of full brightness
-    let intervalId = setInterval(() => {
-        if(initialBrightness >= 100) {
-            clearInterval(intervalId);
-            return;
-        }
-        initialBrightness++;
-        document.body.style.filter = `brightness(${initialBrightness}%)`;
-    }, BRIGHTNESS_INTERVAL)
 }
 
 function getAverageRGB(imageEl) {
