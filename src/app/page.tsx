@@ -36,15 +36,15 @@ export default function Portfolio() {
     },
     "Frontend Development": {
       icon: Globe,
-      items: ["React", "Angular", "HTML5", "CSS", "Responsive Design"],
+      items: ["React", "Next.js", "Angular", "HTML5", "CSS", "Responsive Design", "Tailwind CSS"],
     },
     "Backend Development": {
       icon: Server,
-      items: ["Django", "Flask", "REST APIs", "Microservices"],
+      items: ["Django", "Flask", "REST APIs", "Microservices", "Node.js", "Express", "RabbitMQ"],
     },
-    Databases: {
+    "Databases": {
       icon: Database,
-      items: ["PostgreSQL", "SQLite", "MongoDB", "Redis"],
+      items: ["PostgreSQL", "SQLite", "MongoDB", "Redis", "MySQL"],
     },
     "Cloud & DevOps": {
       icon: Cloud,
@@ -52,7 +52,7 @@ export default function Portfolio() {
     },
     "Mobile Development": {
       icon: Smartphone,
-      items: ["Android", "Kotlin", "Cross-platform Solutions"],
+      items: ["Android", "Kotlin", "React Native"],
     },
   }
 
@@ -64,7 +64,7 @@ export default function Portfolio() {
       technologies: ["React", "Django", "PostgreSQL", "AWS"],
       details:
         "Built a full-featured healthcare management system with patient scheduling, staff management, and service tracking. Implemented secure authentication, real-time notifications, and comprehensive reporting features.",
-      link: "#",
+      link: "https://omegs-uk.netlify.app/",
     },
     {
       id: "shops-galore",
@@ -83,7 +83,7 @@ export default function Portfolio() {
       technologies: ["Various", "Python", "JavaScript", "Kotlin"],
       details:
         "Maintained an active GitHub profile with diverse projects ranging from web applications to mobile apps, utility scripts, and experimental technologies. Regular contributions to open source projects and personal learning experiments.",
-      github: "#",
+      github: "https://github.com/Ken-mbira",
     },
   ]
 
@@ -290,7 +290,6 @@ export default function Portfolio() {
           </div>
         </div>
       </section>
-
       <Separator />
 
       {/* Contact Section */}
@@ -298,8 +297,7 @@ export default function Portfolio() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-8">Let&apos;s Work Together</h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            I&apos;m always interested in new opportunities and exciting projects. Whether you need backend systems,
-            frontend interfaces, or mobile applications, let&apos;s discuss how we can bring your ideas to life.
+            I&apos;m always interested in exciting projects. Let&apos;s discuss how we can bring your ideas to life.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button asChild size="lg">
@@ -309,7 +307,7 @@ export default function Portfolio() {
               </a>
             </Button>
             <Button variant="outline" size="lg" asChild>
-              <a href="#" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/Ken-mbira" target="_blank" rel="noopener noreferrer">
                 <Github className="w-4 h-4 mr-2" />
                 View GitHub
               </a>
