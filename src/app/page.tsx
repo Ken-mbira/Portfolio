@@ -21,9 +21,13 @@ import {
   Server,
 } from "lucide-react"
 import { ModeToggle } from "@/components/mode-toggle"
+import useScrollPosition from "@/hooks/scrollPositionHook"
 
 export default function Portfolio() {
   const [expandedProject, setExpandedProject] = useState<string | null>(null)
+
+  const  scrollPosition = useScrollPosition();
+  const isScrolled = scrollPosition > 50;
 
   const toggleProject = (projectId: string) => {
     setExpandedProject(expandedProject === projectId ? null : projectId)
@@ -129,10 +133,15 @@ export default function Portfolio() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-xl font-bold">Ken Mbira</h1>
-          <ModeToggle />
+      <header className={`fixed top-0 left-0 right-0 z-50 p-4 transition-all duration-300 ${
+            isScrolled ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+          }`}
+        >
+        <div className="bg-background/80 backdrop-blur-sm border rounded-xl max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 className="text-xl font-bold">Ken Mbira</h1>
+            <ModeToggle />
+          </div>
         </div>
       </header>
       {/* Hero Section */}
