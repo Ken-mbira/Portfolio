@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import Link from "next/link"
 import {
   ChevronDown,
   ChevronUp,
@@ -139,8 +140,18 @@ export default function Portfolio() {
         >
         <div className="bg-background/80 backdrop-blur-sm border rounded-xl max-w-6xl mx-auto">
           <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 className="text-xl font-bold">Ken Mbira</h1>
-            <ModeToggle />
+            <Link href="/" className="text-xl font-bold hover:opacity-80 transition-opacity">
+              Ken Mbira
+            </Link>
+            <div className="flex items-center gap-4">
+              <Link
+                href="/blog"
+                className="text-sm font-medium hover:opacity-80 transition-opacity"
+              >
+                Blog
+              </Link>
+              <ModeToggle />
+            </div>
           </div>
         </div>
       </header>
@@ -154,7 +165,7 @@ export default function Portfolio() {
             frontend interfaces, and mobile applications. Focused on building scalable, efficient solutions that deliver
             exceptional user experiences.
           </p>
-          <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
+          <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground mb-6">
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4" />
               Nairobi, Kenya
@@ -167,6 +178,14 @@ export default function Portfolio() {
               <Phone className="w-4 h-4" />
               +254758926990
             </div>
+          </div>
+          <div className="flex justify-center">
+            <Link
+              href="/blog"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Blog →
+            </Link>
           </div>
         </div>
       </section>

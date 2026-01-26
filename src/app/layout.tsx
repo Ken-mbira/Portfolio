@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: "Ken Mbira - Bug Whisperer",
   description: "A caffeine-powered software engineer from Nairobi who turns coffee into code and occasionally remembers to eat. Specializing in full-stack development and making computers do exactly what they're told (most of the time).",
 }
