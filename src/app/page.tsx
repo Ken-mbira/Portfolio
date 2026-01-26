@@ -174,10 +174,6 @@ export default function Portfolio() {
               <Mail className="w-4 h-4" />
               devmbira@gmail.com
             </div>
-            <div className="flex items-center gap-2">
-              <Phone className="w-4 h-4" />
-              +254758926990
-            </div>
           </div>
           <div className="flex justify-center">
             <Link
