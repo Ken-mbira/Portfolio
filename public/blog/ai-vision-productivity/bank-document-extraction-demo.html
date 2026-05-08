@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bank Document Extraction Demo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 0;
+    padding: 22px 20px 28px;
+    color: #1a1a1a;
+  }
+
+  .demo-scale {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: scale(0.82);
+    transform-origin: top center;
+  }
+
+  .headline {
+    font-size: 22px; font-weight: 300;
+    color: #111; letter-spacing: -0.02em;
+    margin-bottom: 34px;
+  }
+  .headline strong { font-weight: 700; }
+
+  .scene { width: 700px; display: flex; flex-direction: column; align-items: center; }
+  .forms-row { display: flex; gap: 20px; justify-content: center; width: 100%; }
+
+  .form-card {
+    width: 190px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px;
+    background: #fff;
+    position: relative;
+    transition: border-color 0.4s, box-shadow 0.4s;
+  }
+  .form-card.highlight { border-color: #d1d5db; box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+
+  .logo-row {
+    display: flex; align-items: center; gap: 9px;
+    margin-bottom: 14px; padding-bottom: 12px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .bank-name { font-size: 10px; font-weight: 500; color: #9ca3af; letter-spacing: 0.04em; }
+
+  .row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+  .line { height: 5px; border-radius: 10px; background: #f3f4f6; flex: 1; }
+  .line.s    { max-width: 38%; }
+  .line.m    { max-width: 58%; }
+  .line.l    { max-width: 80%; }
+  .line.full { max-width: 100%; }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 9px; font-weight: 600;
+    padding: 2px 9px; border-radius: 100px;
+    opacity: 0.25; transition: opacity 0.5s;
+    white-space: nowrap;
+  }
+  .pill.lit { opacity: 1; }
+  .pill-dot { width: 5px; height: 5px; border-radius: 50%; }
+  .pill.amount-p   { background: #fef9ec; color: #b45309; }
+  .pill.interest-p { background: #f5f3ff; color: #6d28d9; }
+  .pill.term-p     { background: #f0fdf4; color: #15803d; }
+  .pill.amount-p   .pill-dot { background: #f59e0b; }
+  .pill.interest-p .pill-dot { background: #8b5cf6; }
+  .pill.term-p     .pill-dot { background: #22c55e; }
+
+  .svg-area { width: 700px; height: 96px; display: block; }
+  #rateLabel { opacity: 0; transition: opacity 0.5s; }
+
+  .output-card {
+    width: 490px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px 28px;
+    background: #fff;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .output-card.show { opacity: 1; transform: translateY(0); }
+  .output-top {
+    font-size: 9px; font-weight: 600; color: #d1d5db;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .output-field {
+    display: flex; justify-content: space-between;
+    align-items: baseline;
+    padding: 11px 0;
+    border-bottom: 1px solid #f9fafb;
+  }
+  .output-field:last-child { border-bottom: none; }
+  .olabel {
+    font-size: 11px; color: #9ca3af; font-weight: 400;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .oval {
+    font-size: 14px; font-weight: 700;
+    white-space: nowrap; text-align: right;
+  }
+  .oval.a { color: #b45309; }
+  .oval.i { color: #6d28d9; }
+  .oval.t { color: #15803d; }
+
+  .src-note {
+    font-size: 9px; color: #d1d5db;
+    text-align: center; margin-top: 14px;
+    letter-spacing: 0.04em;
+    opacity: 0; transition: opacity 0.6s;
+  }
+  .src-note.show { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="demo-scale">
+<div class="headline">One result from <strong>many formats</strong></div>
+
+<div class="scene">
+  <div class="forms-row">
+
+    <div class="form-card" id="fc0">
+      <div class="logo-row">
+        <svg width="28" height="28" viewBox="0 0 32 32">
+          <rect width="32" height="32" rx="6" fill="#DA291C"/>
+          <text x="16" y="20.5" font-size="9" font-weight="800" fill="white" text-anchor="middle" font-family="Arial,sans-serif" letter-spacing="0.5">ABSA</text>
+        </svg>
+        <span class="bank-name">ABSA Bank</span>
+      </div>
+      <div class="row"><div class="line full"></div></div>
+      <div class="row"><div class="line m"></div></div>
+      <div class="row" style="justify-content:flex-start">
+        <span class="pill amount-p" id="p0a"><span class="pill-dot"></span>KES 5,000,000</span>
+      </div>
+      <div class="row"><div class="line l"></div></div>
+      <div class="row"><div class="line s"></div></div>
+      <div class="row" style="justify-content:flex-end">
+        <span class="pill interest-p" id="p0b"><span class="pill-dot"></span>8.5% p.a.</span>
+      </div>
+      <div class="row"><div class="line m"></div></div>
+      <div class="row" style="justify-content:center">
+        <span class="pill term-p" id="p0c"><span class="pill-dot"></span>24 months</span>
+      </div>
+      <div class="row"><div class="line full"></div></div>
+    </div>
+
+    <div class="form-card" id="fc1">
+      <div class="logo-row">
+        <svg width="28" height="28" viewBox="0 0 32 32">
+          <rect width="32" height="32" rx="6" fill="#006B3F"/>
+          <text x="16" y="20.5" font-size="10" font-weight="800" fill="white" text-anchor="middle" font-family="Arial,sans-serif" letter-spacing="0.5">KCB</text>
+        </svg>
+        <span class="bank-name">KCB Bank</span>
+      </div>
+      <div class="row" style="justify-content:flex-end">
+        <span class="pill term-p" id="p1c"><span class="pill-dot"></span>24 months</span>
+      </div>
+      <div class="row"><div class="line full"></div></div>
+      <div class="row"><div class="line l"></div></div>
+      <div class="row" style="justify-content:flex-start">
+        <span class="pill interest-p" id="p1b"><span class="pill-dot"></span>8.5% p.a.</span>
+      </div>
+      <div class="row"><div class="line s"></div></div>
+      <div class="row"><div class="line full"></div></div>
+      <div class="row" style="justify-content:center">
+        <span class="pill amount-p" id="p1a"><span class="pill-dot"></span>KES 5,000,000</span>
+      </div>
+      <div class="row"><div class="line m"></div></div>
+    </div>
+
+    <div class="form-card" id="fc2">
+      <div class="logo-row">
+        <svg width="28" height="28" viewBox="0 0 32 32">
+          <rect width="32" height="32" rx="6" fill="#00529B"/>
+          <rect x="7" y="9" width="8" height="8" rx="1.5" fill="white" opacity="0.95"/>
+          <rect x="17" y="15" width="8" height="8" rx="1.5" fill="white" opacity="0.55"/>
+        </svg>
+        <span class="bank-name">Stan. Chartered</span>
+      </div>
+      <div class="row" style="justify-content:flex-start">
+        <span class="pill interest-p" id="p2b"><span class="pill-dot"></span>8.5% p.a.</span>
+      </div>
+      <div class="row"><div class="line m"></div></div>
+      <div class="row"><div class="line full"></div></div>
+      <div class="row"><div class="line s"></div></div>
+      <div class="row" style="justify-content:flex-end">
+        <span class="pill amount-p" id="p2a"><span class="pill-dot"></span>$38,760</span>
+      </div>
+      <div class="row"><div class="line l"></div></div>
+      <div class="row" style="justify-content:flex-start">
+        <span class="pill term-p" id="p2c"><span class="pill-dot"></span>24 months</span>
+      </div>
+      <div class="row"><div class="line m"></div></div>
+    </div>
+
+  </div>
+
+  <svg class="svg-area" id="svgArea" xmlns="http://www.w3.org/2000/svg">
+    <path id="sp0" d="M 109 0 C 109 48, 350 48, 350 96"
+          fill="none" stroke="#d1d5db" stroke-width="1.5"
+          stroke-dasharray="230" stroke-dashoffset="230" opacity="0"/>
+    <path id="sp1" d="M 350 0 L 350 96"
+          fill="none" stroke="#d1d5db" stroke-width="1.5"
+          stroke-dasharray="96" stroke-dashoffset="96" opacity="0"/>
+    <path id="sp2" d="M 591 0 C 591 48, 350 48, 350 96"
+          fill="none" stroke="#d1d5db" stroke-width="1.5"
+          stroke-dasharray="230" stroke-dashoffset="230" opacity="0"/>
+    <text id="rateLabel"
+          x="524" y="30"
+          font-size="8.5" font-family="Inter,-apple-system,sans-serif"
+          fill="#9ca3af" font-weight="500"
+          text-anchor="middle">1 USD = 129 KES</text>
+    <circle id="endDot" cx="350" cy="94" r="3" fill="#d1d5db" opacity="0"/>
+  </svg>
+
+  <div class="output-card" id="outputCard">
+    <div class="output-top">Extracted — all sources</div>
+    <div class="output-field">
+      <span class="olabel">Loan Amount</span>
+      <span class="oval a">KES 5,000,000</span>
+    </div>
+    <div class="output-field">
+      <span class="olabel">Interest Rate</span>
+      <span class="oval i">8.5% p.a.</span>
+    </div>
+    <div class="output-field">
+      <span class="olabel">Repayment Term</span>
+      <span class="oval t">24 months</span>
+    </div>
+  </div>
+
+  <div class="src-note" id="srcNote">Extracted from ABSA · KCB · Standard Chartered</div>
+</div>
+</div>
+
+<script>
+  const pills = ['p0a','p0b','p0c','p1a','p1b','p1c','p2a','p2b','p2c'];
+  const paths = [['sp0',230],['sp1',96],['sp2',230]];
+
+  function reset() {
+    pills.forEach(id => document.getElementById(id).classList.remove('lit'));
+    paths.forEach(([id, len]) => {
+      const e = document.getElementById(id);
+      e.style.transition = 'none';
+      e.style.opacity = '0';
+      e.style.strokeDashoffset = len;
+    });
+    const rl = document.getElementById('rateLabel');
+    rl.style.transition = 'none';
+    rl.style.opacity = '0';
+    document.getElementById('endDot').style.opacity = '0';
+    document.getElementById('outputCard').classList.remove('show');
+    document.getElementById('srcNote').classList.remove('show');
+    ['fc0','fc1','fc2'].forEach(id => document.getElementById(id).classList.remove('highlight'));
+  }
+
+  function run() {
+    reset();
+
+    setTimeout(() => {
+      pills.forEach((id, i) => setTimeout(() => document.getElementById(id).classList.add('lit'), i * 80));
+      ['fc0','fc1','fc2'].forEach((id, i) => setTimeout(() => document.getElementById(id).classList.add('highlight'), i * 120));
+    }, 400);
+
+    setTimeout(() => {
+      paths.forEach(([id, len], i) => {
+        const e = document.getElementById(id);
+        e.style.opacity = '1';
+        setTimeout(() => {
+          e.style.transition = 'stroke-dashoffset 0.9s ease-in-out';
+          e.style.strokeDashoffset = 0;
+        }, i * 100);
+      });
+
+      setTimeout(() => {
+        const rl = document.getElementById('rateLabel');
+        rl.style.transition = 'opacity 0.4s';
+        rl.style.opacity = '1';
+      }, 650);
+
+      setTimeout(() => { document.getElementById('endDot').style.opacity = '1'; }, 1100);
+    }, 1400);
+
+    setTimeout(() => { document.getElementById('outputCard').classList.add('show'); }, 2600);
+    setTimeout(() => { document.getElementById('srcNote').classList.add('show'); }, 3100);
+  }
+
+  run();
+  setInterval(run, 5500);
+</script>
+</body>
+</html>
